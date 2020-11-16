@@ -39,63 +39,61 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          if (state.wasIncremented == true) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text('incremented'),
-                duration: Duration(milliseconds: 300),
-              ),
-            );
-          } else if (state.wasIncremented == false) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text('decremented'),
-                duration: Duration(milliseconds: 300),
-              ),
-            );
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              BlocBuilder<CounterCubit, CounterState>(
-                builder: (context, state) {
-                  return Text(
-                    state.counterValue.toString(),
-                    style: Theme.of(context).textTheme.headline4,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            BlocConsumer<CounterCubit, CounterState>(
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('incremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
                   );
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).inc();
-                    },
-                    tooltip: 'Increment',
-                    child: Icon(Icons.add),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).dec();
-                    },
-                    tooltip: 'Decrement',
-                    child: Icon(Icons.remove),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                } else if (state.wasIncremented == false) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('decremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Text(
+                  state.counterValue.toString(),
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<CounterCubit>(context).inc();
+                  },
+                  tooltip: 'Increment',
+                  child: Icon(Icons.add),
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    BlocProvider.of<CounterCubit>(context).dec();
+                  },
+                  tooltip: 'Decrement',
+                  child: Icon(Icons.remove),
+                ),
+              ],
+            ),
+          ],
         ),
-        // This trailing comma makes auto-formatting nicer for build methods.
       ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
